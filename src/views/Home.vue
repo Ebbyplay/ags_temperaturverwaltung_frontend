@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-    <NavigationCom />
     <TableCom
       :dataSetName="dataSetName"
       :tableHeader="tableHeader"
@@ -12,14 +11,12 @@
 
 <script>
 import TableCom from "@/components/TableCom.vue";
-import NavigationCom from "@/components/NavigationCom.vue";
-import axios from 'axios';
+import axios from "axios";
 
 export default {
   name: "Home",
   components: {
     TableCom,
-    NavigationCom,
   },
   data: function data() {
     return {
@@ -30,13 +27,13 @@ export default {
         ["21", "22", "23"],
         ["31", "32", "33"],
       ],
-      info: ''
+      info: "",
     };
   },
- mounted() {
-   axios
-      .get('https://api.coindesk.com/v1/bpi/currentprice.json')
-      .then(response => (this.info = response))
- },
+  mounted() {
+    axios
+      .get("https://api.coindesk.com/v1/bpi/currentprice.json")
+      .then((response) => (this.info = response));
+  },
 };
 </script>

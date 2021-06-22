@@ -7,11 +7,13 @@ const routes = [
     name: 'Home',
     component: Home
   },
-  {
+  /*
+  { //How to add a new route with component
     path: '/about',
     name: 'About',
     component: () => import('../views/About.vue')
-  },
+  },*/
+
   {
     path: "/:catchAll(.*)",  
     component: Home, //TODO NotFound Component

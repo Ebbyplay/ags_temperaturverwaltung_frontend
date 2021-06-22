@@ -1,30 +1,65 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+  <div id="header">
+    <!--TODO: Header View-->
   </div>
-  <router-view/>
+  <div id="main">
+    <div id="nav"></div>
+    <NavigationCom />
+    <div id="content">
+      <router-view />
+    </div>
+  </div>
+  <div id="footer">
+    <!--TODO: Footer View-->
+  </div>
 </template>
 
-<style>
+<script>
+import NavigationCom from "@/components/NavigationCom.vue";
+
+export default {
+  name: "Home",
+  components: { NavigationCom },
+};
+</script>
+
+<style lang="scss">
+body {
+  margin: 0;
+  padding: 0;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+  display: flex;
+  flex-direction: column;
+}
+
+#header {
+  height: 10vh;
+  background-color: green;
+}
+
+#main {
+  height: 80vh;
+  display: flex;
+  background-color: blue;
 }
 
 #nav {
-  padding: 30px;
+  width: 20vw;
 }
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
+#content {
+  width: 80vw;
+  background-color: cyan;
+  padding: 5vh 5vw;
 }
 
-#nav a.router-link-exact-active {
-  color: #42b983;
+#footer {
+  height: 10vh;
+  background-color: red;
 }
 </style>
