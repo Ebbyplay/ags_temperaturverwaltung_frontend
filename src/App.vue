@@ -1,6 +1,6 @@
 <template>
   <div id="header" class="flex">
-    <!--TODO: Header View-->
+    <HeaderCom></HeaderCom>
   </div>
   <div id="main" class="flex">
     <div id="nav">
@@ -16,11 +16,12 @@
 </template>
 
 <script>
+import HeaderCom from "@/components/HeaderCom.vue";
 import NavigationCom from "@/components/NavigationCom.vue";
 
 export default {
   name: "Home",
-  components: { NavigationCom },
+  components: { NavigationCom, HeaderCom },
 };
 </script>
 
@@ -47,12 +48,6 @@ button {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   flex-direction: column;
-}
-
-#header {
-  height: 10vh;
-  background-color: darken($backgroundcolor, 10%);
-  box-shadow: 0px 7px 10px 5px darken($backgroundcolor, 5%);
 }
 
 #main {
