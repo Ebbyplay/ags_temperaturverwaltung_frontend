@@ -3,9 +3,8 @@
     <TableCom
       :dataSetName="dataSetName"
       :tableHeader="getTableHeaders"
-      :tableData="tableData"
+      :tableData="getTableData"
     />
-    {{ getData }}
   </div>
 </template>
 
@@ -21,25 +20,19 @@ export default {
   data: function data() {
     return {
       dataSetName: "TestTabelle",
-      tableHeader: this.$store.tableHeaders,
-      tableData: [
-        ["11", "12", "13"],
-        ["21", "22", "23"],
-        ["31", "32", "33"],
-      ],
-      info: "Test",
     };
   },
-  mounted() {
-    this.$store.dispatch("getRequest", );
-  },
+  mounted() {},
   computed: {
     getData() {
       return this.$store.state.data;
     },
     getTableHeaders() {
       return this.$store.state.tableHeaders;
-    }
-  }
+    },
+    getTableData() {
+      return this.$store.state.tableData;
+    },
+  },
 };
 </script>

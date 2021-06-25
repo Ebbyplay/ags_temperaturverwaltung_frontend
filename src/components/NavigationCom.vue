@@ -9,21 +9,23 @@
     >
       {{ navItem.name }}
     </button>
-  </div >
+  </div>
 </template>
 
 <script>
-import {navList} from "../assets/data/navList";
+import { navList } from "../assets/data/navList";
 
 export default {
   name: "Navigation",
-  props: {
-    navigationItems: navList,
+  data: function data() {
+    return {
+      navigationItems: navList,
+    };
   },
   methods: {
     changeNav(e) {
-      this.$store.commit('CHANGE_NAVITEM', e.target.id); 
-    }
+      this.$store.dispatch("change_nav_item", e.target.id);
+    },
   },
 };
 </script>

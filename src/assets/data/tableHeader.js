@@ -1,6 +1,8 @@
 let tableHeaderMap = new Map();
 
-tableHeaderMap.set("Sensoren", ["ID", "Rack", "Hersteller", "Maximale Temperatur"]);
-tableHeaderMap.set("User", ["ID", "Name", "Nickname", "Telefonnummer", "Admin"]);
+tableHeaderMap.set("sensors", ["ID", "Rack", "Hersteller", "Maximale Temperatur"]);
+tableHeaderMap.set("users", ["ID", "Name", "Nickname", "Telefonnummer", "Admin"]);
+tableHeaderMap.set("temperatures", ["ID", "Name", "Nickname", "Telefonnummer", "Admin", "Wert"]);
+
 
 export {tableHeaderMap};

@@ -10,37 +10,33 @@ export default createStore({
     },
     tableHeaders : [],
     tableData : [],
-    navigation: "Home",
+    navigation: "",
     data: "",
-  },
-  getters: {
-    getSelectedNavItem: state => state.navigation,
-    getAuthorizedUser: state => state.authorizedUser,
   },
   mutations: { //setter sync //called via commit('CHANGE_NAVITEM','newNavItem')
     CHANGE_NAVITEM(state, navItem) {
       state.navigation = navItem
       state.tableHeaders = tableHeaderMap.get(navItem)
     },
-    DOWNLOAD_DATA(state, data) {
-      state.data = data
-    },
     CHANGE_TABLEDATA(state, tableData) {
       state.tableData = tableData
-    }
+    },
   },
   actions: { //setter async only call mutations (could be used for ajax requests) //called via dispatch('function_name','variable')
-    async getData(context) {
-      const { data } = await axios
-        .get("http://localhost:8080/users")
-      context.commit("DOWNLOAD_DATA", data)
+    async getRequest(context) {
+        axios
+        .get("http://localhost:8080/" + this.state.navigation)
+        .then(response => 
+          context.commit("CHANGE_TABLEDATA", response.data)
+          )
+      
     },
-    async getRequest(context, endpoint) {
-      const { tableData } = await axios
-        .get("http://localhost:8080/" + endpoint)
-      context.commit("CHANGE_TABLEDATA", tableData)
+    async change_nav_item(context, navItem) {
+      context.commit("CHANGE_NAVITEM", navItem)
+      this.dispatch('getRequest')
     }
+
   },
   modules: {
-  }
+  },
 })
