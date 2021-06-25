@@ -4,17 +4,26 @@
       class="nav-item"
       v-for="(navItem, index) in navigationItems"
       :key="index"
+      :id="navItem.id"
+      @click="changeNav"
     >
-      {{ navItem }}
+      {{ navItem.name }}
     </button>
-  </div>
+  </div >
 </template>
 
 <script>
+import {navList} from "../assets/data/navList";
+
 export default {
   name: "Navigation",
   props: {
-    navigationItems: { String, default: ["Home", "Sensoren", "User"] },
+    navigationItems: navList,
+  },
+  methods: {
+    changeNav(e) {
+      this.$store.commit('CHANGE_NAVITEM', e.target.id); 
+    }
   },
 };
 </script>

@@ -2,7 +2,7 @@
   <div class="home">
     <TableCom
       :dataSetName="dataSetName"
-      :tableHeader="tableHeader"
+      :tableHeader="getTableHeaders"
       :tableData="tableData"
     />
     {{ getData }}
@@ -21,7 +21,7 @@ export default {
   data: function data() {
     return {
       dataSetName: "TestTabelle",
-      tableHeader: ["Header1", "Header2", "Header3"],
+      tableHeader: this.$store.tableHeaders,
       tableData: [
         ["11", "12", "13"],
         ["21", "22", "23"],
@@ -31,11 +31,14 @@ export default {
     };
   },
   mounted() {
-    this.$store.dispatch("getData");
+    this.$store.dispatch("getRequest", );
   },
   computed: {
     getData() {
       return this.$store.state.data;
+    },
+    getTableHeaders() {
+      return this.$store.state.tableHeaders;
     }
   }
 };
