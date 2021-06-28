@@ -11,17 +11,18 @@
     </div>
   </div>
   <div id="footer">
-    <!--TODO: Footer View-->
+    <FooterCom></FooterCom>
   </div>
 </template>
 
 <script>
 import HeaderCom from "@/components/HeaderCom.vue";
 import NavigationCom from "@/components/NavigationCom.vue";
+import FooterCom from "@/components/FooterCom.vue";
 
 export default {
   name: "Home",
-  components: { NavigationCom, HeaderCom },
+  components: { NavigationCom, HeaderCom, FooterCom },
 };
 </script>
 
@@ -48,6 +49,7 @@ button {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   flex-direction: column;
+  box-sizing: border-box;
 }
 
 #main {
@@ -62,10 +64,5 @@ button {
 #content {
   width: 80vw;
   padding: 5vh 5vw;
-}
-
-#footer {
-  height: 10vh;
-  background-color: darken($backgroundcolor, 10%);
 }
 </style>
