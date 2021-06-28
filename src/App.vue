@@ -50,11 +50,19 @@ button {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   flex-direction: column;
-  box-sizing: border-box;
+}
+
+#header {
+  height: 10vh;
 }
 
 #main {
   height: 80vh;
+}
+
+#footer {
+  height: 10vh;
+  background-color: darken($backgroundcolor, 10%);
 }
 
 #nav {

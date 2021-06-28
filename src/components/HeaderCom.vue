@@ -18,9 +18,9 @@ export default {
 .container {
   display: flex;
   flex-direction: row;
-  padding: 2vh 0;
   background-color: darken($backgroundcolor, 10%);
   box-shadow: 0px 7px 10px 5px darken($backgroundcolor, 5%);
+  max-width: 100vw;
 
   #logo {
     min-width: 20vw;

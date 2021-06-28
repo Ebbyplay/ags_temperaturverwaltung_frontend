@@ -4,13 +4,13 @@
       <div id="github-front">
         <a href="https://github.com/Ebbyplay/ags_temperaturverwaltung_backend"
           ><i class="mdi mdi-github"></i>
-          Github backend
+          Backend
         </a>
       </div>
       <div id="github-backend">
         <a href="https://github.com/Ebbyplay/ags_temperaturverwaltung_frontend/"
           ><i class="mdi mdi-github"></i>
-          Github Frontend
+          Frontend
         </a>
       </div>
     </div>
@@ -30,11 +30,12 @@ export default {};
 .container {
   display: flex;
   flex-direction: row;
-  background-color: darken($backgroundcolor, 10%);
-  padding-top: 2vh;
+  max-width: 100vw;
 
   & > #github {
-    min-width: 20vw;
+    width: 20vw;
+    padding-top: 1vh;
+    padding-left: 1.5vw;
     & a {
       text-decoration: none;
 
@@ -46,8 +47,8 @@ export default {};
 
   & > #names {
     padding-left: 5vw;
+    padding-top: 1vh;
     color: darken($textcolor, 10%);
-    min-height: 10vh;
     width: 80vw;
   }
 }
