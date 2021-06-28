@@ -28,6 +28,7 @@ export default {
 
 <style lang="scss">
 @import "assets/css/theme.scss";
+@import "../node_modules/@mdi\\font/css/materialdesignicons.min.css";
 
 body {
   margin: 0;

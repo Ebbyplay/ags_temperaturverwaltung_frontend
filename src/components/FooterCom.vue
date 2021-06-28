@@ -2,14 +2,14 @@
   <div class="container">
     <div id="github">
       <div id="github-front">
-        <a href="https://github.com/Ebbyplay/ags_temperaturverwaltung_backend">
+        <a href="https://github.com/Ebbyplay/ags_temperaturverwaltung_backend"
+          ><i class="mdi mdi-github"></i>
           Github backend
         </a>
       </div>
       <div id="github-backend">
-        <a
-          href="https://github.com/Ebbyplay/ags_temperaturverwaltung_frontend/"
-        >
+        <a href="https://github.com/Ebbyplay/ags_temperaturverwaltung_frontend/"
+          ><i class="mdi mdi-github"></i>
           Github Frontend
         </a>
       </div>
