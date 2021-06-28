@@ -3,14 +3,14 @@
     <div id="github">
       <div id="github-front">
         <a href="https://github.com/Ebbyplay/ags_temperaturverwaltung_backend">
-          Github backend
+          Backend
         </a>
       </div>
       <div id="github-backend">
         <a
           href="https://github.com/Ebbyplay/ags_temperaturverwaltung_frontend/"
         >
-          Github Frontend
+          Frontend
         </a>
       </div>
     </div>
@@ -31,10 +31,10 @@ export default {};
   display: flex;
   flex-direction: row;
   background-color: darken($backgroundcolor, 10%);
-  padding-top: 2vh;
+  max-width: 100vw;
 
   & > #github {
-    min-width: 20vw;
+    width: 20vw;
     & a {
       text-decoration: none;
 
