@@ -3,7 +3,7 @@
     <TableCom
       :dataSetName="dataSetName"
       :tableHeader="getTableHeaders"
-      :tableData="getTableData"
+      
     />
   </div>
 </template>
@@ -22,7 +22,23 @@ export default {
       dataSetName: "TestTabelle",
     };
   },
-  mounted() {},
+  mounted() {
+    this.getTableData();
+  },
+  methods: {
+    getTableData() {
+      this.$store.dispatch("myAction").then(response => {
+
+          console.log("Got some data, now lets show something in this component " + response[0])
+
+        }, error =>{
+
+           
+       console.error("Got nothing from server. Prompt user to check internet connection and try again")
+
+        })
+    }
+  },
   computed: {
     getData() {
       return this.$store.state.data;
@@ -30,9 +46,7 @@ export default {
     getTableHeaders() {
       return this.$store.state.tableHeaders;
     },
-    getTableData() {
-      return this.$store.state.tableData;
-    },
+    
   },
 };
 </script>

@@ -23,17 +23,32 @@ export default createStore({
     },
   },
   actions: { //setter async only call mutations (could be used for ajax requests) //called via dispatch('function_name','variable')
-    async getRequest(context) {
-        axios
-        .get("http://localhost:8080/" + this.state.navigation)
-        .then(response => 
-          context.commit("CHANGE_TABLEDATA", response.data)
-          )
-      
-    },
+    
     async change_nav_item(context, navItem) {
       context.commit("CHANGE_NAVITEM", navItem)
       this.dispatch('getRequest')
+    },
+
+    myAction(context, data) {
+
+      return new Promise((resolve, reject) => {
+
+          // Do something here... lets say, a http call using vue-resource
+         
+         axios.get("http://localhost:8080/user/findAll").then(response => {
+
+             resolve(response);  // Let the calling function know that http is done. You may send some data back
+
+         }, error => {
+
+              // http failed, let the calling function know that action did not work out
+             
+              reject(error);
+
+          })
+
+      })
+
     }
 
   },
