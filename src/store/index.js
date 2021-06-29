@@ -18,7 +18,6 @@ export default createStore({
     
     async change_nav_item(context, navItem) {
       context.commit("CHANGE_NAVITEM", navItem)
-      this.dispatch('getRequest')
     },
 
     findAll(context, endpoint) {
