@@ -1,17 +1,22 @@
 <template>
-  <div class="home"></div>
+  <div class="home">
+    <SensorCom :sensor="sensor" />
+  </div>
 </template>
 
 <script>
-import TableCom from "@/components/TableCom.vue";
+import SensorCom from "@/components/SensorCom.vue";
 import axios from "axios";
 
 export default {
   name: "Home",
-  components: {},
+  components: {
+    SensorCom,
+  },
   data: function data() {
     return {
       dataSetName: "TestTabelle",
+      sensor: { id: 8, maxTemperature: 60, rackId: 3, manufacturerId: 1 },
     };
   },
   mounted() {},
