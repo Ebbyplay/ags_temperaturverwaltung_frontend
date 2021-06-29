@@ -1,6 +1,6 @@
 <template>
   <div id="header" class="flex">
-    <!--TODO: Header View-->
+    <HeaderCom></HeaderCom>
   </div>
   <div id="main" class="flex">
     <div id="nav">
@@ -11,21 +11,24 @@
     </div>
   </div>
   <div id="footer">
-    <!--TODO: Footer View-->
+    <FooterCom></FooterCom>
   </div>
 </template>
 
 <script>
+import HeaderCom from "@/components/HeaderCom.vue";
 import NavigationCom from "@/components/NavigationCom.vue";
+import FooterCom from "@/components/FooterCom.vue";
 
 export default {
   name: "Home",
-  components: { NavigationCom },
+  components: { NavigationCom, HeaderCom, FooterCom },
 };
 </script>
 
 <style lang="scss">
 @import "assets/css/theme.scss";
+@import "../node_modules/@mdi\\font/css/materialdesignicons.min.css";
 
 body {
   margin: 0;
@@ -51,12 +54,15 @@ button {
 
 #header {
   height: 10vh;
-  background-color: darken($backgroundcolor, 10%);
-  box-shadow: 0px 7px 10px 5px darken($backgroundcolor, 5%);
 }
 
 #main {
   height: 80vh;
+}
+
+#footer {
+  height: 10vh;
+  background-color: darken($backgroundcolor, 10%);
 }
 
 #nav {
@@ -67,10 +73,5 @@ button {
 #content {
   width: 80vw;
   padding: 5vh 5vw;
-}
-
-#footer {
-  height: 10vh;
-  background-color: darken($backgroundcolor, 10%);
 }
 </style>
