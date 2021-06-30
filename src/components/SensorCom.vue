@@ -19,13 +19,13 @@
           v-if="!expandedDetails"
           v-on:click="
             expandedDetails = !expandedDetails;
-            expandedTemperatures = true;
+            expandedTemperatures = false;
           "
         >
         </i>
       </div>
     </div>
-    <div id="data" v-if="!expandedDetails">
+    <div id="data" v-if="expandedDetails">
       <div id="left-content" class="flex-column">
         <table>
           <tr>
@@ -80,13 +80,19 @@
       </div>
       <span id="spacer" />
     </div>
-    <div id="temperatures" v-if="!expandedTemperatures">
+    <div id="temperature-data" v-if="expandedTemperatures">
       <hr />
+      <div v-for="(temp, index) in temperatures" :key="index">
+        {{ temp.temperature_value }}
+        {{ createDate(temp.timestamp) }}
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import { createDate } from "../utils.js";
+
 export default {
   name: "SensorCom",
   props: {
@@ -97,6 +103,7 @@ export default {
       expandedDetails: false,
       expandedTemperatures: false,
       manufacturerName: "",
+      temperatures: [],
       temperature_values: [],
       currentTemp: 0,
     };
@@ -127,6 +134,7 @@ export default {
       this.$store.dispatch("findTempsBySensorId", sensorId).then(
         (response) => {
           for (var i = 0; i < response.length; i++) {
+            this.temperatures[i] = response[i];
             this.temperature_values[i] = response[i].temperature_value;
           }
         },
@@ -135,10 +143,13 @@ export default {
         }
       );
     },
+    createDate(dateArray) {
+      return createDate(dateArray);
+    },
   },
   computed: {
     calcTemperatureColor() {
-      var returnVal = ""; //TODO: if no temperatures yet
+      var returnVal = "";
       let currentTemp = this.getCurrentTemp;
       if (this.sensor.maxTemperature - currentTemp >= 10) {
         returnVal = "green";
@@ -259,7 +270,7 @@ export default {
     }
   }
 
-  #temperatures {
+  #temperature-data {
     hr {
       border: 1px solid $buttoncolor;
       margin: 20px;
