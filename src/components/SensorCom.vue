@@ -38,24 +38,25 @@
           </tr>
           <tr>
             <td>
-              Alle Temperaturen
-            </td>
-            <td>
-              <div id="icon-container">
-                <i
-                  id="when-opened"
-                  class="mdi mdi-chevron-down"
-                  v-if="expandedTemperatures"
-                  v-on:click="expandedTemperatures = !expandedTemperatures"
-                ></i>
-                <i
-                  id="when-closed"
-                  class="mdi mdi-chevron-right"
-                  v-if="!expandedTemperatures"
-                  v-on:click="expandedTemperatures = !expandedTemperatures"
-                ></i>
+              <div id="expand-temp">
+                <span>Alle Temperaturen</span>
+                <div id="icon-container">
+                  <i
+                    id="when-opened"
+                    class="mdi mdi-chevron-down"
+                    v-if="expandedTemperatures"
+                    v-on:click="expandedTemperatures = !expandedTemperatures"
+                  ></i>
+                  <i
+                    id="when-closed"
+                    class="mdi mdi-chevron-right"
+                    v-if="!expandedTemperatures"
+                    v-on:click="expandedTemperatures = !expandedTemperatures"
+                  ></i>
+                </div>
               </div>
             </td>
+            <td></td>
           </tr>
         </table>
       </div>
@@ -82,19 +83,24 @@
     </div>
     <div id="temperature-data" v-if="expandedTemperatures">
       <hr />
-      <div v-for="(temp, index) in temperatures" :key="index">
-        {{ temp.temperature_value }}
-        {{ createDate(temp.timestamp) }}
-      </div>
+      <TableCom
+        dataSetName="Temperaturen"
+        :tableHeader="tableHeader"
+        :tableData="transformTempertureData(temperatures)"
+      />
     </div>
   </div>
 </template>
 
 <script>
 import { createDate } from "../utils.js";
+import TableCom from "../components/TableCom";
 
 export default {
   name: "SensorCom",
+  components: {
+    TableCom,
+  },
   props: {
     sensor: Object,
   },
@@ -106,6 +112,7 @@ export default {
       temperatures: [],
       temperature_values: [],
       currentTemp: 0,
+      tableHeader: ["ID", "Temperatur", "Zeitstempel"],
     };
   },
   mounted() {
@@ -145,6 +152,18 @@ export default {
     },
     createDate(dateArray) {
       return createDate(dateArray);
+    },
+    transformTempertureData(data) {
+      let transformedData = new Array();
+      for (var i = 0; i < this.temperatures.length; i++) {
+        let object = {
+          id: this.temperatures[i].id,
+          temperature_value: this.temperatures[i].temperature_value,
+          timestamp: createDate(this.temperatures[i].timestamp),
+        };
+        transformedData[i] = object;
+      }
+      return transformedData;
     },
   },
   computed: {
@@ -259,6 +278,10 @@ export default {
 
     #left-content {
       flex: 4 1 auto;
+
+      #expand-temp {
+        display: flex;
+      }
     }
 
     #right-content {
