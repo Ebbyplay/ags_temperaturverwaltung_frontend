@@ -1,5 +1,6 @@
 <template>
   <div id="sensors-container">
+    <h1>Sensoren</h1>
     <SensorCom
       class="sensor"
       v-for="(sensor, index) in sensors"
@@ -59,7 +60,7 @@ export default {
   height: 100%;
   padding-right: 20px;
   .sensor {
-    margin-bottom: 20px;
+    margin-top: 20px;
   }
 }
 </style>
