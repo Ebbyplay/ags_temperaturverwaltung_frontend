@@ -1,5 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import Home from '../views/Home.vue'
+import Sensors from '../views/Sensors.vue'
 
 const routes = [
   {
@@ -7,13 +8,11 @@ const routes = [
     name: 'Home',
     component: Home
   },
-  /*
-  { //How to add a new route with component
-    path: '/about',
-    name: 'About',
-    component: () => import('../views/About.vue')
-  },*/
-
+  {
+    path: '/sensoren',
+    name: 'Sensors',
+    component: Sensors,
+  },
   {
     path: "/:catchAll(.*)",  
     component: Home, //TODO NotFound Component
