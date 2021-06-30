@@ -88,6 +88,15 @@ export default createStore({
               reject(error);
         })
       })
+    },
+    findTempsBySensorId(context, sensorId) {
+      return new Promise((resolve, reject) => {
+         axios.get("http://localhost:8080/temperature/findBySensorId/" + sensorId).then(response => {
+             resolve(response.data);
+         }, error => {
+              reject(error);
+        })
+      })
     }
 
   },
