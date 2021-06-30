@@ -1,10 +1,12 @@
 <template>
-  <SensorCom
-    class="sensor"
-    v-for="(sensor, index) in sensors"
-    :key="index"
-    :sensor="sensor"
-  />
+  <div id="sensors-container">
+    <SensorCom
+      class="sensor"
+      v-for="(sensor, index) in sensors"
+      :key="index"
+      :sensor="sensor"
+    />
+  </div>
 </template>
 
 <script>
@@ -30,7 +32,6 @@ export default {
     getSensors() {
       this.$store.dispatch("findAll", "sensor").then(
         (response) => {
-          console.log(response);
           for (var i = 0; i < response.length; i++) {
             var row = response[i];
             this.sensors[i] = {
@@ -51,8 +52,14 @@ export default {
 };
 </script>
 
-<style lang="scss">
-.sensor {
-  margin-bottom: 20px;
+<style lang="scss" scoped>
+#sensors-container {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 100%;
+  padding-right: 20px;
+  .sensor {
+    margin-bottom: 20px;
+  }
 }
 </style>

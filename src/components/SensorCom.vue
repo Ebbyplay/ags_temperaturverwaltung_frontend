@@ -87,6 +87,7 @@
     <div id="temperature-data" v-if="expandedTemperatures">
       <hr />
       <TableCom
+        id="TableCom"
         dataSetName="Temperaturen"
         :tableHeader="tableHeader"
         :tableData="transformTempertureData(temperatures)"
@@ -229,6 +230,7 @@ export default {
   border-radius: 8px;
   box-shadow: 0px 7px 10px 0px darken($backgroundcolor, 5%);
   font-size: 22px;
+
   #header {
     display: flex;
     width: 100%;
@@ -312,6 +314,11 @@ export default {
     hr {
       border: 1px solid $buttoncolor;
       margin: 20px;
+    }
+
+    #TableCom {
+      overflow-y: scroll;
+      max-height: 300px;
     }
   }
 
