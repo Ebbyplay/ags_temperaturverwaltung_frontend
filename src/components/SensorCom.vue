@@ -1,6 +1,12 @@
 <template>
   <div class="container">
-    <div id="header">
+    <div
+      id="header"
+      v-on:click="
+        expandedDetails = !expandedDetails;
+        expandedTemperatures = false;
+      "
+    >
       <span>sensorID {{ sensor.id }}</span>
       <span>aktuelle temperatur:</span>
       <span id="current-temperature" :style="calcTemperatureColor"
@@ -11,16 +17,11 @@
           id="when-opened"
           class="mdi mdi-chevron-down"
           v-if="expandedDetails"
-          v-on:click="expandedDetails = !expandedDetails"
         ></i>
         <i
           id="when-closed"
           class="mdi mdi-chevron-right"
           v-if="!expandedDetails"
-          v-on:click="
-            expandedDetails = !expandedDetails;
-            expandedTemperatures = false;
-          "
         >
         </i>
       </div>
@@ -38,20 +39,21 @@
           </tr>
           <tr>
             <td>
-              <div id="expand-temp">
+              <div
+                id="expand-temp"
+                v-on:click="expandedTemperatures = !expandedTemperatures"
+              >
                 <span>Alle Temperaturen</span>
                 <div id="icon-container">
                   <i
                     id="when-opened"
                     class="mdi mdi-chevron-down"
                     v-if="expandedTemperatures"
-                    v-on:click="expandedTemperatures = !expandedTemperatures"
                   ></i>
                   <i
                     id="when-closed"
                     class="mdi mdi-chevron-right"
                     v-if="!expandedTemperatures"
-                    v-on:click="expandedTemperatures = !expandedTemperatures"
                   ></i>
                 </div>
               </div>
@@ -212,7 +214,6 @@ export default {
 
 <style lang="scss" scoped>
 @import "../assets/css/theme.scss";
-//century gothic
 .container {
   display: flex;
   flex-direction: column;
@@ -225,6 +226,7 @@ export default {
     display: flex;
     width: 100%;
     height: 50px;
+    cursor: pointer;
 
     span {
       padding: 10px 0 10px 10px;
@@ -281,6 +283,12 @@ export default {
 
       #expand-temp {
         display: flex;
+        width: 220px;
+        border: 2px solid $buttoncolor;
+        border-radius: 5px;
+        padding: 5px;
+        user-select: none;
+        cursor: pointer;
       }
     }
 
