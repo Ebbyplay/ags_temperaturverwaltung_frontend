@@ -115,15 +115,18 @@ export default {
       manufacturerName: "",
       temperatures: [],
       temperature_values: [],
-      currentTemp: 0,
       tableHeader: ["ID", "Temperatur", "Zeitstempel"],
     };
   },
   mounted() {
-    if (this.sensor != null) {
-      this.getManufacturerName(this.sensor.manufacturerId);
-      this.getTemperatures(this.sensor.id);
-    }
+    this.$nextTick(function() {
+      window.setInterval(() => {
+        if (this.sensor != null) {
+          this.getManufacturerName(this.sensor.manufacturerId);
+          this.getTemperatures(this.sensor.id);
+        }
+      }, 3000);
+    });
   },
   methods: {
     getManufacturerName(manufacturerId) {
@@ -144,6 +147,7 @@ export default {
     getTemperatures(sensorId) {
       this.$store.dispatch("findTempsBySensorId", sensorId).then(
         (response) => {
+          response = response.reverse();
           for (var i = 0; i < response.length; i++) {
             this.temperatures[i] = response[i];
             this.temperature_values[i] = response[i].temperature_value;
@@ -162,7 +166,9 @@ export default {
       for (var i = 0; i < this.temperatures.length; i++) {
         let object = {
           id: this.temperatures[i].id,
-          temperature_value: this.temperatures[i].temperature_value,
+          temperature_value: Number.parseFloat(
+            this.temperatures[i].temperature_value
+          ).toPrecision(3),
           timestamp: createDate(this.temperatures[i].timestamp),
         };
         transformedData[i] = object;
@@ -174,9 +180,9 @@ export default {
     calcTemperatureColor() {
       var returnVal = "";
       let currentTemp = this.getCurrentTemp;
-      if (this.sensor.maxTemperature - currentTemp >= 10) {
+      if (this.sensor.maxTemperature - currentTemp > 10) {
         returnVal = "green";
-      } else if (this.sensor.maxTemperature - currentTemp <= 0) {
+      } else if (this.sensor.maxTemperature - currentTemp <= 5) {
         returnVal = "red";
       } else {
         returnVal = "yellow";
@@ -192,7 +198,7 @@ export default {
           highestTemp = this.temperature_values[i];
         }
       }
-      return highestTemp;
+      return Number.parseFloat(highestTemp).toPrecision(3);
     },
     calcAvgTemp() {
       var sum = 0;
@@ -212,7 +218,9 @@ export default {
     getCurrentTemp() {
       var returnVal = 0;
       if (this.temperature_values.length != 0) {
-        returnVal = this.temperature_values[0];
+        returnVal = Number.parseFloat(this.temperature_values[0]).toPrecision(
+          3
+        );
       }
       return returnVal;
     },
