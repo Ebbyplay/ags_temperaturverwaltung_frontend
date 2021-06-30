@@ -1,14 +1,17 @@
 <template>
   <div id="navigation" class="flex">
-    <button
+    <div
       class="nav-item"
       v-for="(navItem, index) in navigationItems"
       :key="index"
       :id="navItem.id"
-      @click="changeNav"
     >
-      {{ navItem.name }}
-    </button>
+      <a :href="navItem.path">
+        <button @click="changeNav">
+          {{ navItem.name }}
+        </button>
+      </a>
+    </div>
   </div>
 </template>
 
