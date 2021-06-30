@@ -74,6 +74,7 @@ export default {
   mounted() {
     if (this.sensor != null) {
       this.getManufacturerName(this.sensor.manufacturerId);
+      this.getTemperatures(this.sensor.id);
     }
   },
   methods: {
@@ -92,7 +93,16 @@ export default {
         }
       );
     },
-    getTemperatures(sensorId) {},
+    getTemperatures(sensorId) {
+      this.$store.dispatch("findTempsBySensorId", sensorId).then(
+        (response) => {
+          console.log(response);
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
+    },
   },
   computed: {
     calcTemperatureColor() {
