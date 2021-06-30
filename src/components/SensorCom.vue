@@ -4,24 +4,28 @@
       <span>sensorID {{ sensor.id }}</span>
       <span>aktuelle temperatur:</span>
       <span id="current-temperature" :style="calcTemperatureColor"
-        >{{ currentTemp }}°C</span
+        >{{ getCurrentTemp }}°C</span
       >
       <div id="icon-container">
         <i
           id="when-opened"
           class="mdi mdi-chevron-down"
-          v-if="expanded"
-          v-on:click="expanded = !expanded"
+          v-if="expandedDetails"
+          v-on:click="expandedDetails = !expandedDetails"
         ></i>
         <i
           id="when-closed"
           class="mdi mdi-chevron-right"
-          v-if="!expanded"
-          v-on:click="expanded = !expanded"
-        ></i>
+          v-if="!expandedDetails"
+          v-on:click="
+            expandedDetails = !expandedDetails;
+            expandedTemperatures = true;
+          "
+        >
+        </i>
       </div>
     </div>
-    <div id="data" v-if="expanded">
+    <div id="data" v-if="!expandedDetails">
       <div id="left-content" class="flex-column">
         <table>
           <tr>
@@ -32,6 +36,27 @@
             <td>in rack:</td>
             <td>{{ sensor.rackId }}</td>
           </tr>
+          <tr>
+            <td>
+              Alle Temperaturen
+            </td>
+            <td>
+              <div id="icon-container">
+                <i
+                  id="when-opened"
+                  class="mdi mdi-chevron-down"
+                  v-if="expandedTemperatures"
+                  v-on:click="expandedTemperatures = !expandedTemperatures"
+                ></i>
+                <i
+                  id="when-closed"
+                  class="mdi mdi-chevron-right"
+                  v-if="!expandedTemperatures"
+                  v-on:click="expandedTemperatures = !expandedTemperatures"
+                ></i>
+              </div>
+            </td>
+          </tr>
         </table>
       </div>
 
@@ -39,21 +64,25 @@
         <table>
           <tr>
             <td>höchste temperatur:</td>
-            <td class="right">{{ 25 }}°C</td>
+            <td class="right">{{ calcHighestTemp }}°C</td>
           </tr>
           <tr>
             <td>durchschn. temp.:</td>
-            <td class="right">{{ 25 }}°C</td>
+            <td class="right">{{ calcAvgTemp }}°C</td>
           </tr>
           <tr>
             <td>temperatur limit:</td>
-            <td class="right">{{ sensor.maxTemperature }}°C</td>
+            <td class="right" style="color: red">
+              {{ sensor.maxTemperature }}°C
+            </td>
           </tr>
         </table>
       </div>
-      <span id="spacer"></span>
+      <span id="spacer" />
     </div>
-    <div id="temperatures"></div>
+    <div id="temperatures" v-if="!expandedTemperatures">
+      <hr />
+    </div>
   </div>
 </template>
 
@@ -65,10 +94,11 @@ export default {
   },
   data: function data() {
     return {
-      expanded: false,
-      currentTemp: 50,
+      expandedDetails: false,
+      expandedTemperatures: false,
       manufacturerName: "",
-      temperatures: [],
+      temperature_values: [],
+      currentTemp: 0,
     };
   },
   mounted() {
@@ -79,7 +109,6 @@ export default {
   },
   methods: {
     getManufacturerName(manufacturerId) {
-      console.log(manufacturerId);
       let payload = {
         endpoint: "manufacturer",
         id: manufacturerId,
@@ -93,10 +122,13 @@ export default {
         }
       );
     },
+
     getTemperatures(sensorId) {
       this.$store.dispatch("findTempsBySensorId", sensorId).then(
         (response) => {
-          console.log(response);
+          for (var i = 0; i < response.length; i++) {
+            this.temperature_values[i] = response[i].temperature_value;
+          }
         },
         (error) => {
           console.error(error);
@@ -106,16 +138,43 @@ export default {
   },
   computed: {
     calcTemperatureColor() {
-      var returnVal = "";
-      if (this.sensor.maxTemperature - this.currentTemp >= 10) {
+      var returnVal = ""; //TODO: if no temperatures yet
+      let currentTemp = this.getCurrentTemp;
+      if (this.sensor.maxTemperature - currentTemp >= 10) {
         returnVal = "green";
-      } else if (this.sensor.maxTemperature - this.currentTemp <= 0) {
+      } else if (this.sensor.maxTemperature - currentTemp <= 0) {
         returnVal = "red";
       } else {
         returnVal = "yellow";
       }
 
       return { color: returnVal };
+    },
+
+    calcHighestTemp() {
+      var highestTemp = 0;
+      for (var i = 0; i < this.temperature_values.length; i++) {
+        if (this.temperature_values[i] > highestTemp) {
+          highestTemp = this.temperature_values[i];
+        }
+      }
+      return highestTemp;
+    },
+    calcAvgTemp() {
+      var sum = 0;
+      var count = 0;
+      for (var i = 0; i < this.temperature_values.length; i++) {
+        sum = sum + this.temperature_values[i];
+        count++;
+      }
+      return Number.parseFloat(sum / count).toPrecision(3);
+    },
+    getCurrentTemp() {
+      var returnVal = 0;
+      if (this.temperature_values.length != 0) {
+        returnVal = this.temperature_values[0];
+      }
+      return returnVal;
     },
   },
 };
@@ -201,6 +260,10 @@ export default {
   }
 
   #temperatures {
+    hr {
+      border: 1px solid $buttoncolor;
+      margin: 20px;
+    }
   }
 
   .flex-column {
