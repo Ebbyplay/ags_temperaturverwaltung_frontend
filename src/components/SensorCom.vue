@@ -3,7 +3,7 @@
     <div id="header">
       <span>sensorID {{ sensor.id }}</span>
       <span>aktuelle temperatur:</span>
-      <span id="current-temperature" :style="temperatureColor"
+      <span id="current-temperature" :style="calcTemperatureColor"
         >{{ currentTemp }}°C</span
       >
       <div id="icon-container">
@@ -26,7 +26,7 @@
         <table>
           <tr>
             <td>hersteller:</td>
-            <td>{{ getManufacturerName() }}</td>
+            <td>{{ manufacturerName }}</td>
           </tr>
           <tr>
             <td>in rack:</td>
@@ -67,26 +67,35 @@ export default {
     return {
       expanded: false,
       currentTemp: 50,
-      manufacturerName,
+      manufacturerName: "",
+      temperatures: [],
     };
   },
-  mounted() {},
+  mounted() {
+    if (this.sensor != null) {
+      this.getManufacturerName(this.sensor.manufacturerId);
+    }
+  },
   methods: {
-    getManufacturerName() {
-      this.$store.dispatch("findByID", "manufacturer", this.sensor.id).then(
+    getManufacturerName(manufacturerId) {
+      console.log(manufacturerId);
+      let payload = {
+        endpoint: "manufacturer",
+        id: manufacturerId,
+      };
+      this.$store.dispatch("findByID", payload).then(
         (response) => {
-          this.manufacturerName = reponse.name;
+          this.manufacturerName = response.name;
         },
         (error) => {
           console.error(error);
         }
       );
-      return name;
     },
-    getTemperatures() {},
+    getTemperatures(sensorId) {},
   },
   computed: {
-    temperatureColor() {
+    calcTemperatureColor() {
       var returnVal = "";
       if (this.sensor.maxTemperature - this.currentTemp >= 10) {
         returnVal = "green";
