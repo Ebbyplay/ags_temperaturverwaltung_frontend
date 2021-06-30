@@ -42,6 +42,7 @@
               <div
                 id="expand-temp"
                 v-on:click="expandedTemperatures = !expandedTemperatures"
+                v-if="temperatures.length > 0"
               >
                 <span>Alle Temperaturen</span>
                 <div id="icon-container">
@@ -199,7 +200,13 @@ export default {
         sum = sum + this.temperature_values[i];
         count++;
       }
-      return Number.parseFloat(sum / count).toPrecision(3);
+      var returnVal;
+      if (count == 0) {
+        returnVal = 0;
+      } else {
+        returnVal = Number.parseFloat(sum / count).toPrecision(3);
+      }
+      return returnVal;
     },
     getCurrentTemp() {
       var returnVal = 0;
