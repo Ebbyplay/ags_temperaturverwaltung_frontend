@@ -6,7 +6,9 @@
       :key="index"
       @click="changeNav"
     >
-      {{ navItem.name }}
+      <a :href="navItem.path">
+        {{ navItem.name }}
+      </a>
     </button>
   </div>
 </template>
@@ -41,6 +43,11 @@ $activecolor: darken($buttoncolor, 20%);
   align-items: center;
   margin: 20px 0 0 0;
 
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
   .nav-item {
     width: 80%;
     font-size: 2vw;
@@ -48,10 +55,11 @@ $activecolor: darken($buttoncolor, 20%);
     cursor: pointer;
     background-color: $buttoncolor;
     transition: 0.2s;
+    border-top: none;
     &:first-child {
       border-top-left-radius: 5px;
       border-top-right-radius: 5px;
-      border-bottom: none;
+      border-top: solid $bordercolor 1px;
     }
     &:last-child {
       border-top: none;
