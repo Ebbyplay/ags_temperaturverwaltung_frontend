@@ -77,7 +77,11 @@
           <tr>
             <td>temperatur limit:</td>
             <td class="right" style="color: red">
-              {{ sensor.maxTemperature }}°C
+              <input
+                id="maxtemp-input"
+                :value="sensor.maxTemperature"
+                readonly
+              />°C
             </td>
           </tr>
         </table>
@@ -292,6 +296,21 @@ export default {
 
       td {
         padding-top: 20px;
+
+        #maxtemp-input {
+          border: none;
+          display: inline;
+          font-family: inherit;
+          font-size: inherit;
+          padding: none;
+          background-color: inherit;
+          color: inherit;
+          width: 25px;
+
+          &:focus {
+            outline: none;
+          }
+        }
       }
     }
 
