@@ -21,8 +21,6 @@ export default {
   },
   data: function data() {
     return {
-      dataSetName: "TestTabelle",
-      sensor: { id: 8, maxTemperature: 60, rackId: 3, manufacturerId: 1 },
       sensors: [],
     };
   },
@@ -57,7 +55,7 @@ export default {
 #sensors-container {
   overflow-y: scroll;
   overflow-x: hidden;
-  height: 100%;
+  height: 90%;
   padding-right: 20px;
   .sensor {
     margin-top: 20px;
