@@ -1,6 +1,6 @@
 <template>
+  <h1>Sensoren</h1>
   <div id="sensors-container">
-    <h1>Sensoren</h1>
     <SensorCom
       class="sensor"
       v-for="(sensor, index) in sensors"
