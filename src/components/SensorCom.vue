@@ -5,6 +5,7 @@
       v-on:click="
         expandedDetails = !expandedDetails;
         expandedTemperatures = false;
+        editing = false;
       "
     >
       <span>sensorID {{ sensor.id }}</span>
@@ -50,12 +51,12 @@
                     id="when-opened"
                     class="mdi mdi-chevron-down"
                     v-if="expandedTemperatures"
-                  ></i>
+                  />
                   <i
                     id="when-closed"
                     class="mdi mdi-chevron-right"
                     v-if="!expandedTemperatures"
-                  ></i>
+                  />
                 </div>
               </div>
             </td>
@@ -86,7 +87,21 @@
           </tr>
         </table>
       </div>
-      <span id="spacer" />
+      <div id="action-bar">
+        <span id="spacer" />
+        <i
+          id="edit"
+          class="mdi mdi-pencil"
+          v-if="isAdmin && !editing"
+          v-on:click="editing = true"
+        />
+        <i
+          id="edit"
+          class="mdi mdi-content-save"
+          v-if="isAdmin && editing"
+          v-on:click="editing = false"
+        />
+      </div>
     </div>
     <div id="temperature-data" v-if="expandedTemperatures">
       <hr />
@@ -120,12 +135,17 @@ export default {
       temperatures: [],
       temperature_values: [],
       tableHeader: ["ID", "Temperatur", "Zeitstempel"],
+      editing: false,
+      isAdmin: false,
     };
   },
   mounted() {
+    //this.isAdmin =  this.$store.state.authorizedUser.admin;
+    this.isAdmin = true;
+
     this.$nextTick(function() {
       window.setInterval(() => {
-        if (this.sensor != null) {
+        if (this.sensor != null && !this.editing) {
           this.getManufacturerName(this.sensor.manufacturerId);
           this.getTemperatures(this.sensor.id);
         }
@@ -238,6 +258,7 @@ export default {
   display: flex;
   flex-direction: column;
   width: 100%;
+  height: auto;
   border: solid 1px $bordercolor;
   border-radius: 8px;
   box-shadow: 0px 7px 10px 0px darken($backgroundcolor, 5%);
@@ -284,6 +305,7 @@ export default {
     padding: 1%;
     display: flex;
     width: 96%;
+    height: 100%;
 
     table {
       .left {
@@ -316,6 +338,7 @@ export default {
 
     #left-content {
       flex: 4 1 auto;
+      height: 100%;
 
       #expand-temp {
         display: flex;
@@ -331,9 +354,32 @@ export default {
     #right-content {
       flex: 3 1 auto;
     }
+  }
+
+  #action-bar {
+    display: flex;
+    height: 100%;
+    flex: 1 1 6%;
+    flex-direction: column;
 
     #spacer {
-      flex: 1 1 6%;
+      flex: 1 1 auto;
+      height: 118px;
+      width: 100%;
+    }
+
+    #edit {
+      flex: 1 1 auto;
+      width: 100%;
+      height: 33%;
+      padding: 5px;
+      cursor: pointer;
+      &:hover {
+        color: $bordercolor;
+      }
+      &:active {
+        color: darken($bordercolor, 10%);
+      }
     }
   }
 
