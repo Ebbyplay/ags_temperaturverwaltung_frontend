@@ -50,7 +50,7 @@ $activecolor: darken($buttoncolor, 20%);
 
   .nav-item {
     width: 80%;
-    font-size: 2vw;
+    font-size: 45px;
     border: solid $bordercolor 1px;
     cursor: pointer;
     background-color: $buttoncolor;
