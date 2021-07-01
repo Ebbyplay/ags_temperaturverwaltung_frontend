@@ -79,9 +79,10 @@
             <td>temperatur limit:</td>
             <td class="right" style="color: red">
               <input
-                id="maxtemp-input"
-                :value="sensor.maxTemperature"
-                readonly
+                v-model="maxTempInput"
+                v-bind:class="[
+                  editing ? 'maxTempInputActive' : 'maxTempInputPassive',
+                ]"
               />°C
             </td>
           </tr>
@@ -90,17 +91,28 @@
       <div id="action-bar">
         <span id="spacer" />
         <i
-          id="edit"
-          class="mdi mdi-pencil"
+          class="edit mdi mdi-pencil"
           v-if="isAdmin && !editing"
           v-on:click="editing = true"
         />
-        <i
-          id="edit"
-          class="mdi mdi-content-save"
-          v-if="isAdmin && editing"
-          v-on:click="editing = false"
-        />
+        <div id="edit-actions">
+          <i
+            class="save mdi mdi-content-save"
+            v-if="isAdmin && editing"
+            v-on:click="
+              editing = false;
+              updateMaxTemp(maxTempInput.value);
+            "
+          />
+          <i
+            class="cancel mdi mdi-close-thick"
+            v-if="isAdmin && editing"
+            v-on:click="
+              editing = false;
+              maxTempInput = sensor.maxTemperature;
+            "
+          />
+        </div>
       </div>
     </div>
     <div id="temperature-data" v-if="expandedTemperatures">
@@ -137,6 +149,7 @@ export default {
       tableHeader: ["ID", "Temperatur", "Zeitstempel"],
       editing: false,
       isAdmin: false,
+      maxTempInput: this.sensor.maxTemperature,
     };
   },
   mounted() {
@@ -198,6 +211,14 @@ export default {
         transformedData[i] = object;
       }
       return transformedData;
+    },
+    updateMaxTemp() {
+      let updateEntity = {
+        sensorId: this.sensor.id,
+        newMaxTemperature: this.maxTempInput,
+        userId: 6, //TODO get user id
+      };
+      this.$store.dispatch("updateMaxTemp", updateEntity);
     },
   },
   computed: {
@@ -314,25 +335,35 @@ export default {
 
       .right {
         text-align: right;
-      }
 
-      td {
-        padding-top: 20px;
+        .maxTempInputActive {
+          display: inline;
+          font-size: inherit;
+          border: 1px solid $bordercolor;
+          padding: none;
+          background-color: inherit;
+          color: inherit;
+          width: 25px;
+        }
 
-        #maxtemp-input {
+        .maxTempInputPassive {
           border: none;
           display: inline;
-          font-family: inherit;
           font-size: inherit;
           padding: none;
           background-color: inherit;
           color: inherit;
           width: 25px;
+          pointer-events: none;
 
           &:focus {
             outline: none;
           }
         }
+      }
+
+      td {
+        padding-top: 20px;
       }
     }
 
@@ -364,16 +395,22 @@ export default {
 
     #spacer {
       flex: 1 1 auto;
-      height: 118px;
+      height: 125px;
       width: 100%;
     }
 
-    #edit {
-      flex: 1 1 auto;
+    #edit-action {
+      display: flex;
+      flex-direction: row;
+    }
+
+    .edit,
+    .save,
+    .cancel {
       width: 100%;
       height: 33%;
-      padding: 5px;
       cursor: pointer;
+      padding: 0 5px 0 5px;
       &:hover {
         color: $bordercolor;
       }
