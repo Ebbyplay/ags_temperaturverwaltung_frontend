@@ -1,14 +1,18 @@
 <template>
   <h1>Logs</h1>
-  <div id="logs-container"></div>
+  <div id="logs-container">
+    <LogCom class="log" v-for="(log, index) in logs" :key="index" :log="log" />
+  </div>
 </template>
 
 <script>
-import axios from "axios";
+import LogCom from "../components/LogCom.vue";
 
 export default {
   name: "Logs",
-  components: {},
+  components: {
+    LogCom,
+  },
   data: function data() {
     return {
       logs: [],
@@ -21,6 +25,7 @@ export default {
     getLogs() {
       this.$store.dispatch("findAll", "log").then(
         (response) => {
+          response.reverse();
           for (var i = 0; i < response.length; i++) {
             var row = response[i];
             this.logs[i] = {
@@ -47,7 +52,8 @@ export default {
   overflow-x: hidden;
   height: 90%;
   padding-right: 20px;
-  .sensor {
+
+  .log {
     margin-top: 20px;
   }
 }

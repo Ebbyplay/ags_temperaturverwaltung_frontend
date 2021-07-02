@@ -2,6 +2,8 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import Sensors from '../views/Sensors.vue'
 import Temperatures from '../views/Temperatures.vue'
+import Logs from '../views/Logs.vue'
+
 
 
 const routes = [
@@ -19,6 +21,11 @@ const routes = [
     path: '/temperaturen',
     name: 'Temperatures',
     component: Temperatures,
+  },
+  {
+    path: '/logs',
+    name: 'Logs',
+    component: Logs,
   },
   {
     path: "/:catchAll(.*)",  

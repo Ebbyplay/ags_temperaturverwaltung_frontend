@@ -1,16 +1,53 @@
 <template>
-  <div class="container"></div>
+  <div class="container">
+    <span>Zeitstempel: <br />{{ createDate(log.timestamp) }}</span>
+    <span
+      >neue max.Temperatur:<br />
+      {{ log.newMaxTemperature }}°C</span
+    >
+    <span
+      >SensorID:<br />
+      {{ log.sensorId }}</span
+    >
+    <span
+      >User:<br />
+      {{ userName }}</span
+    >
+  </div>
 </template>
 
 <script>
+import { createDate } from "../utils.js";
+
 export default {
-  name: "Navigation",
+  name: "LogCom",
+  props: {
+    log: Object,
+  },
   data: function data() {
     return {
-      navigationItems: navList,
+      userName: "",
     };
   },
-  methods: {},
+  mounted() {
+    this.getUsername(this.log.userId);
+  },
+  methods: {
+    createDate(date) {
+      return createDate(date);
+    },
+    getUsername(userId) {
+      let payload = { id: userId, endpoint: "user" };
+      this.$store.dispatch("findByID", payload).then(
+        (response) => {
+          this.userName = response.name;
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
+    },
+  },
 };
 </script>
 
@@ -26,5 +63,10 @@ export default {
   border-radius: 8px;
   box-shadow: 0px 7px 10px 0px darken($backgroundcolor, 5%);
   font-size: 22px;
+
+  span {
+    flex: 1 1 auto;
+    padding: 10px;
+  }
 }
 </style>
