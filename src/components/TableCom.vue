@@ -4,7 +4,9 @@
     <table>
       <thead>
         <tr>
-          <th v-for="(header, index) in tableHeader" :key="index">{{ header }}</th>
+          <th v-for="(header, index) in tableHeader" :key="index">
+            {{ header }}
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -17,15 +19,14 @@
 </template>
 
 <script>
-export default  {
-    name: 'TableCom',
-    props: {
-      dataSetName: { type: String, default: '' },
-      tableHeader: { type: String, default: '' },
-      tableData: { type: String, default: '' },
-    },
-}
+export default {
+  name: "TableCom",
+  props: {
+    dataSetName: { type: String, default: "" },
+    tableHeader: { type: Array },
+    tableData: { type: Array },
+  },
+};
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

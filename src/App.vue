@@ -1,6 +1,8 @@
 <template>
-  <LoginCom></LoginCom>
-  <div v-if="$store.state.loggedin">
+  <div id="login" v-if="!$store.state.authorizedUser.loggedin">
+    <LoginCom></LoginCom>
+  </div>
+  <div v-if="$store.state.authorizedUser.loggedin">
     <div id="header" class="flex">
       <HeaderCom></HeaderCom>
     </div>
@@ -54,6 +56,11 @@ button {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   flex-direction: column;
+}
+
+#login {
+  height: 100vh;
+  width: 100vw;
 }
 
 #header {
