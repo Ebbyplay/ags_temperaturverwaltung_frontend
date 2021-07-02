@@ -148,7 +148,7 @@ export default {
       temperature_values: [],
       tableHeader: ["ID", "Temperatur", "Zeitstempel"],
       editing: false,
-      isAdmin: false,
+      isAdmin: this.$store.state.authorizedUser.admin,
       maxTempInput: this.sensor.maxTemperature,
     };
   },

@@ -29,13 +29,16 @@ export default {
     };
   },
   methods: {
-    login: function () {
+    login: function() {
       this.$store.dispatch("findByNickname", this.userName).then(
         (response) => {
-          this.$store.state.authorizedUser.name = response.name;
-          this.$store.state.authorizedUser.admin = response.admin;
-          this.$store.state.authorizedUser.loggedin = true;
-          this.$store.state.authorizedUser.nickname = response.nickname;
+          this.$store.state.authorizedUser = {
+            id: response.id,
+            name: response.name,
+            admin: response.admin,
+            loggedin: true,
+            nickname: response.nickname,
+          };
           this.showError = false;
         },
         (error) => {

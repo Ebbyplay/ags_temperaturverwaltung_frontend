@@ -12,11 +12,14 @@ export default {
   name: "Header",
   props: {},
   methods: {
-    logout: function () {
-      this.$store.state.authorizedUser.name = null;
-      this.$store.state.authorizedUser.admin = false;
-      this.$store.state.authorizedUser.loggedin = false;
-      this.$store.state.authorizedUser.nickname = null;
+    logout: function() {
+      this.$store.state.authorizedUser = {
+        id: null,
+        name: null,
+        admin: false,
+        loggedin: false,
+        nickname: null,
+      };
     },
   },
 };

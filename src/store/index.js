@@ -4,6 +4,7 @@ import { createStore } from 'vuex';
 export default createStore({
   state: {
     authorizedUser: {
+      id: null,
       name: null,
       admin: false,
       loggedin: false,
