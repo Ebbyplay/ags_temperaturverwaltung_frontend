@@ -1,17 +1,22 @@
 <template>
-  <div id="header" class="flex">
-    <HeaderCom></HeaderCom>
+  <div id="login" v-if="!$store.state.authorizedUser.loggedin">
+    <LoginCom></LoginCom>
   </div>
-  <div id="main" class="flex">
-    <div id="nav">
-      <NavigationCom />
+  <div v-if="$store.state.authorizedUser.loggedin">
+    <div id="header" class="flex">
+      <HeaderCom></HeaderCom>
     </div>
-    <div id="content">
-      <router-view />
+    <div id="main" class="flex">
+      <div id="nav">
+        <NavigationCom />
+      </div>
+      <div id="content">
+        <router-view />
+      </div>
     </div>
-  </div>
-  <div id="footer">
-    <FooterCom></FooterCom>
+    <div id="footer">
+      <FooterCom></FooterCom>
+    </div>
   </div>
 </template>
 
@@ -19,10 +24,11 @@
 import HeaderCom from "@/components/HeaderCom.vue";
 import NavigationCom from "@/components/NavigationCom.vue";
 import FooterCom from "@/components/FooterCom.vue";
+import LoginCom from "@/components/LoginCom.vue";
 
 export default {
   name: "Home",
-  components: { NavigationCom, HeaderCom, FooterCom },
+  components: { NavigationCom, HeaderCom, FooterCom, LoginCom },
 };
 </script>
 
@@ -49,6 +55,11 @@ button {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   flex-direction: column;
+}
+
+#login {
+  height: 100vh;
+  width: 100vw;
 }
 
 #header {
