@@ -1,18 +1,15 @@
 <template>
-  <div class="home"></div>
+  <div class="home">Home</div>
 </template>
 
 <script>
-import TableCom from "@/components/TableCom.vue";
 import axios from "axios";
 
 export default {
   name: "Home",
   components: {},
   data: function data() {
-    return {
-      dataSetName: "TestTabelle",
-    };
+    return {};
   },
   mounted() {},
   methods: {},

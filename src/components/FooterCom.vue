@@ -33,7 +33,7 @@ export default {};
   max-width: 100vw;
 
   & > #github {
-    width: 20vw;
+    width: 30vw;
     padding-top: 1vh;
     padding-left: 1.5vw;
     & a {
@@ -49,7 +49,7 @@ export default {};
     padding-left: 5vw;
     padding-top: 1vh;
     color: darken($textcolor, 10%);
-    width: 80vw;
+    width: 70vw;
   }
 }
 </style>
