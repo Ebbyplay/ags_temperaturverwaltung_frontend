@@ -33,12 +33,12 @@ export default {
   max-width: 100vw;
 
   #logo {
-    min-width: 20vw;
+    min-width: 30vw;
   }
 
   h1 {
     padding: 0 5vw;
-    width: 80vw;
+    width: 70vw;
   }
 
   #logout {

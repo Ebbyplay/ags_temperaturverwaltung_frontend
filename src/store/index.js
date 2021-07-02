@@ -35,9 +35,9 @@ export default createStore({
       })
     },
 
-    findByID(context, endpoint, id) {
+    findByID(context, payload) {
       return new Promise((resolve, reject) => {
-        axios.get("http://localhost:8080/" + endpoint + "/" + id).then(response => {
+        axios.get("http://localhost:8080/" + payload.endpoint + "/" + payload.id).then(response => {
           resolve(response.data);
         }, error => {
           reject(error);
@@ -98,6 +98,15 @@ export default createStore({
     findLastTen(context) {
       return new Promise((resolve, reject) => {
         axios.get("http://localhost:8080/temperature/findLast10").then(response => {
+          resolve(response.data);
+        }, error => {
+          reject(error);
+        })
+      })
+    },
+    findTempsBySensorId(context, sensorId) {
+      return new Promise((resolve, reject) => {
+        axios.get("http://localhost:8080/temperature/findBySensorId/" + sensorId).then(response => {
           resolve(response.data);
         }, error => {
           reject(error);

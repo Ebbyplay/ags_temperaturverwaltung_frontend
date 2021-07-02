@@ -1,8 +1,8 @@
 let navList = new Array();
 
-navList = [{name:"Home", id:"home"},
-    {name:"Temperatur", id:"temperature"},
-    {name:"Sensoren", id:"sensor"}, 
-    {name:"User", id:"user"},]
+navList = [{name:"Home", id:"home",path: "#/Home"},
+    {name:"Temperatur", id:"temperature",path:"#/Temperaturen"},
+    {name:"Sensoren", id:"sensor",path:"#/Sensoren"}, 
+    {name:"User", id:"user",path:"#/Nutzer"},]
 
 export {navList};

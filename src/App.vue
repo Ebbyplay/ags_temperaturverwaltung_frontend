@@ -52,7 +52,6 @@ button {
 }
 
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   flex-direction: column;
@@ -77,12 +76,12 @@ button {
 }
 
 #nav {
-  width: 20vw;
+  width: 30vw;
   padding: 5vh 0vw;
 }
 
 #content {
-  width: 80vw;
+  width: 70vw;
   padding: 5vh 5vw;
 }
 </style>
