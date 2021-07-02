@@ -82,6 +82,7 @@
                 v-model="maxTempInput"
                 v-bind:class="[
                   editing ? 'maxTempInputActive' : 'maxTempInputPassive',
+                  'maxTempInput',
                 ]"
               />°C
             </td>
@@ -143,18 +144,17 @@ export default {
     return {
       expandedDetails: false,
       expandedTemperatures: false,
-      manufacturerName: "",
+      manufacturerName: null,
       temperatures: [],
       temperature_values: [],
       tableHeader: ["ID", "Temperatur", "Zeitstempel"],
       editing: false,
-      isAdmin: this.$store.state.authorizedUser.admin,
+      isAdmin: false,
       maxTempInput: this.sensor.maxTemperature,
     };
   },
   mounted() {
-    //this.isAdmin =  this.$store.state.authorizedUser.admin;
-    this.isAdmin = true;
+    this.isAdmin = this.$store.state.authorizedUser.admin;
 
     this.$nextTick(function() {
       window.setInterval(() => {
@@ -216,7 +216,7 @@ export default {
       let updateEntity = {
         sensorId: this.sensor.id,
         newMaxTemperature: this.maxTempInput,
-        userId: 6, //TODO get user id
+        userId: this.$store.state.authorizedUser.id,
       };
       this.$store.dispatch("updateMaxTemp", updateEntity);
     },
@@ -225,9 +225,9 @@ export default {
     calcTemperatureColor() {
       var returnVal = "";
       let currentTemp = this.getCurrentTemp;
-      if (this.sensor.maxTemperature - currentTemp > 10) {
+      if (this.maxTempInput - currentTemp > 10) {
         returnVal = "green";
-      } else if (this.sensor.maxTemperature - currentTemp <= 5) {
+      } else if (this.maxTempInput - currentTemp <= 5) {
         returnVal = "red";
       } else {
         returnVal = "yellow";
@@ -336,24 +336,22 @@ export default {
       .right {
         text-align: right;
 
-        .maxTempInputActive {
-          display: inline;
+        .maxTempInput {
           font-size: inherit;
-          border: 1px solid $bordercolor;
           padding: none;
-          background-color: inherit;
+          display: inline;
+          max-width: 80px;
+          text-align: right;
           color: inherit;
-          width: 25px;
+          background-color: inherit;
+        }
+
+        .maxTempInputActive {
+          border: 1px solid $bordercolor;
         }
 
         .maxTempInputPassive {
           border: none;
-          display: inline;
-          font-size: inherit;
-          padding: none;
-          background-color: inherit;
-          color: inherit;
-          width: 25px;
           pointer-events: none;
 
           &:focus {
