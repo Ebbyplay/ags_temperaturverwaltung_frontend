@@ -31,3 +31,19 @@ $buttoncolor: lighten(#1a1a1a, 20%);
     border-radius: 10px;
   }
 }
+
+.simple-button {
+  border: solid $bordercolor 1px;
+  cursor: pointer;
+  background-color: $buttoncolor;
+  transition: 0.2s;
+  border-radius: 5px;
+  padding: 5px;
+
+  &:hover {
+    background-color: darken($buttoncolor, 10%);
+  }
+  &:active {
+    background-color: darken($bordercolor, 20%);
+  }
+}

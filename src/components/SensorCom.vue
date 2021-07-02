@@ -5,6 +5,7 @@
       v-on:click="
         expandedDetails = !expandedDetails;
         expandedTemperatures = false;
+        editing = false;
       "
     >
       <span>sensorID {{ sensor.id }}</span>
@@ -50,12 +51,12 @@
                     id="when-opened"
                     class="mdi mdi-chevron-down"
                     v-if="expandedTemperatures"
-                  ></i>
+                  />
                   <i
                     id="when-closed"
                     class="mdi mdi-chevron-right"
                     v-if="!expandedTemperatures"
-                  ></i>
+                  />
                 </div>
               </div>
             </td>
@@ -77,12 +78,42 @@
           <tr>
             <td>temperatur limit:</td>
             <td class="right" style="color: red">
-              {{ sensor.maxTemperature }}°C
+              <input
+                v-model="maxTempInput"
+                v-bind:class="[
+                  editing ? 'maxTempInputActive' : 'maxTempInputPassive',
+                ]"
+              />°C
             </td>
           </tr>
         </table>
       </div>
-      <span id="spacer" />
+      <div id="action-bar">
+        <span id="spacer" />
+        <i
+          class="edit mdi mdi-pencil"
+          v-if="isAdmin && !editing"
+          v-on:click="editing = true"
+        />
+        <div id="edit-actions">
+          <i
+            class="save mdi mdi-content-save"
+            v-if="isAdmin && editing"
+            v-on:click="
+              editing = false;
+              updateMaxTemp(maxTempInput.value);
+            "
+          />
+          <i
+            class="cancel mdi mdi-close-thick"
+            v-if="isAdmin && editing"
+            v-on:click="
+              editing = false;
+              maxTempInput = sensor.maxTemperature;
+            "
+          />
+        </div>
+      </div>
     </div>
     <div id="temperature-data" v-if="expandedTemperatures">
       <hr />
@@ -116,12 +147,18 @@ export default {
       temperatures: [],
       temperature_values: [],
       tableHeader: ["ID", "Temperatur", "Zeitstempel"],
+      editing: false,
+      isAdmin: false,
+      maxTempInput: this.sensor.maxTemperature,
     };
   },
   mounted() {
+    //this.isAdmin =  this.$store.state.authorizedUser.admin;
+    this.isAdmin = true;
+
     this.$nextTick(function() {
       window.setInterval(() => {
-        if (this.sensor != null) {
+        if (this.sensor != null && !this.editing) {
           this.getManufacturerName(this.sensor.manufacturerId);
           this.getTemperatures(this.sensor.id);
         }
@@ -174,6 +211,14 @@ export default {
         transformedData[i] = object;
       }
       return transformedData;
+    },
+    updateMaxTemp() {
+      let updateEntity = {
+        sensorId: this.sensor.id,
+        newMaxTemperature: this.maxTempInput,
+        userId: 6, //TODO get user id
+      };
+      this.$store.dispatch("updateMaxTemp", updateEntity);
     },
   },
   computed: {
@@ -234,6 +279,7 @@ export default {
   display: flex;
   flex-direction: column;
   width: 100%;
+  height: auto;
   border: solid 1px $bordercolor;
   border-radius: 8px;
   box-shadow: 0px 7px 10px 0px darken($backgroundcolor, 5%);
@@ -280,6 +326,7 @@ export default {
     padding: 1%;
     display: flex;
     width: 96%;
+    height: 100%;
 
     table {
       .left {
@@ -288,6 +335,31 @@ export default {
 
       .right {
         text-align: right;
+
+        .maxTempInputActive {
+          display: inline;
+          font-size: inherit;
+          border: 1px solid $bordercolor;
+          padding: none;
+          background-color: inherit;
+          color: inherit;
+          width: 25px;
+        }
+
+        .maxTempInputPassive {
+          border: none;
+          display: inline;
+          font-size: inherit;
+          padding: none;
+          background-color: inherit;
+          color: inherit;
+          width: 25px;
+          pointer-events: none;
+
+          &:focus {
+            outline: none;
+          }
+        }
       }
 
       td {
@@ -297,6 +369,7 @@ export default {
 
     #left-content {
       flex: 4 1 auto;
+      height: 100%;
 
       #expand-temp {
         display: flex;
@@ -312,9 +385,38 @@ export default {
     #right-content {
       flex: 3 1 auto;
     }
+  }
+
+  #action-bar {
+    display: flex;
+    height: 100%;
+    flex: 1 1 6%;
+    flex-direction: column;
 
     #spacer {
-      flex: 1 1 6%;
+      flex: 1 1 auto;
+      height: 125px;
+      width: 100%;
+    }
+
+    #edit-action {
+      display: flex;
+      flex-direction: row;
+    }
+
+    .edit,
+    .save,
+    .cancel {
+      width: 100%;
+      height: 33%;
+      cursor: pointer;
+      padding: 0 5px 0 5px;
+      &:hover {
+        color: $bordercolor;
+      }
+      &:active {
+        color: darken($bordercolor, 10%);
+      }
     }
   }
 
