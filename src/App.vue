@@ -57,11 +57,6 @@ button {
   flex-direction: column;
 }
 
-#login {
-  height: 100vh;
-  width: 100vw;
-}
-
 #header {
   height: 10vh;
 }
