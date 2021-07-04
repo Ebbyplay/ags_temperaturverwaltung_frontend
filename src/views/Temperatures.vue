@@ -102,6 +102,7 @@ export default {
 #data-buttons {
   display: flex;
   flex-direction: row;
+  padding-bottom: 3vh;
 
   .simple-button {
     font-size: 25px;
