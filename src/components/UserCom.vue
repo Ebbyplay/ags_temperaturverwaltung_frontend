@@ -4,31 +4,31 @@
         id="header"
         >
         <input
-            v-model="id"
+            v-model.lazy="userData.id"
             v-bind:class="[
               editing ? 'maxTempInputActive' : 'maxTempInputPassive',
             ]"
         />
         <input
-            v-model="name"
+            v-model.lazy="userData.name"
             v-bind:class="[
               editing ? 'maxTempInputActive' : 'maxTempInputPassive',
             ]"
         />
         <input
-            v-model="nickname"
+            v-model.lazy="userData.nickname"
             v-bind:class="[
               editing ? 'maxTempInputActive' : 'maxTempInputPassive',
             ]"
         />
         <input
-            v-model="phonenumber"
+            v-model.lazy="userData.phonenumber"
             v-bind:class="[
               editing ? 'maxTempInputActive' : 'maxTempInputPassive',
             ]"
         />
         <input
-            v-model="admin"
+            v-model.lazy="userData.admin"
             v-bind:class="[
               editing ? 'maxTempInputActive' : 'maxTempInputPassive',
             ]"
@@ -46,7 +46,7 @@
         <div id="edit-actions" v-if="editing">
           <i
             class="save mdi mdi-content-save"
-            v-on:click="editing = false"
+            v-on:click="onSave"
           />
           <i
             class="cancel mdi mdi-close-thick"
@@ -71,17 +71,32 @@ export default {
   },
   data: function data() {
     return {
-      id: this.user.id,
-      name: this.user.name,
-      nickname: this.user.nickname,
-      phonenumber: this.user.phonenumber,
-      admin: this.user.admin,
       editing: false,
+      userData: {
+        id: this.user.id,
+        name: this.user.name,
+        nickname: this.user.nickname,
+        phonenumber: this.user.phonenumber,
+        admin: this.user.admin
+      }
     };
   },
   mounted() {
   },
   methods: {
+    onSave(){
+      this.editing = false;
+      console.log(this.userData)
+      this.updateUser(this.userData);
+    },
+
+    updateUser(userData){
+      let payload = {
+        endpoint: "user",
+        updateEntity: userData,
+      };
+      this.$store.dispatch("update", payload);
+    }
   },
   computed: {
   },

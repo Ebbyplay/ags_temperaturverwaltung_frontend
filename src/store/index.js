@@ -40,9 +40,9 @@ export default createStore({
       })
     },
 
-    create(context, endpoint, newEntity) {
+    create(context, payload) {
       return new Promise((resolve, reject) => {
-         axios.post("http://localhost:8080/" + endpoint + "/create", newEntity).then(response => {
+         axios.post("http://localhost:8080/" + payload.endpoint + "/create", payload.newEntity).then(response => {
              resolve(response.data);
          }, error => {
               reject(error);
@@ -50,9 +50,9 @@ export default createStore({
       })
     },
 
-    update(context, endpoint, updateEntity) {
+    update(context, payload) {
       return new Promise((resolve, reject) => {
-         axios.put("http://localhost:8080/" + endpoint + "/update", updateEntity).then(response => {
+         axios.put("http://localhost:8080/" + payload.endpoint + "/update", payload.updateEntity).then(response => {
              resolve(response.data);
          }, error => {
               reject(error);
