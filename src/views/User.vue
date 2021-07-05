@@ -7,17 +7,20 @@
       :key="index"
       :user="user"
     />
+    <AddButtonCom class = "add"/>
   </div>
 </template>
 
 <script>
 
 import UserCom from "@/components/UserCom.vue";
+import AddButtonCom from "@/components/AddButtonCom.vue"
 
 export default {
   name: "Nutzer",
   components: {
-    UserCom
+    UserCom,
+    AddButtonCom
   },
   data: function data() {
     return {
@@ -61,6 +64,9 @@ export default {
   height: 90%;
   padding-right: 20px;
   .user {
+    margin-top: 20px;
+  }
+  .add{
     margin-top: 20px;
   }
 }

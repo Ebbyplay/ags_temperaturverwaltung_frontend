@@ -86,7 +86,6 @@ export default {
   methods: {
     onSave(){
       this.editing = false;
-      console.log(this.userData)
       this.updateUser(this.userData);
     },
 
