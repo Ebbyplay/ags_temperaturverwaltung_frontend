@@ -4,9 +4,9 @@
       class="nav-item"
       v-for="(navItem, index) in navigationItems"
       :key="index"
-      @click="changeNav"
+      @click= "$router.push(navItem.path)"
     >
-      <a :href="navItem.path">
+      <a>
         {{ navItem.name }}
       </a>
     </button>

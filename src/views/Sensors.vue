@@ -12,7 +12,6 @@
 
 <script>
 import SensorCom from "@/components/SensorCom.vue";
-import axios from "axios";
 
 export default {
   name: "Sensors",
