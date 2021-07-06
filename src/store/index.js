@@ -76,9 +76,9 @@ export default createStore({
       })
     },
 
-    delete(context, endpoint, id) {
+    delete(context, payload) {
       return new Promise((resolve, reject) => {
-        axios.delete("http://localhost:8080/" + endpoint + "/delete/" + id).then(response => {
+        axios.delete("http://localhost:8080/" + payload.endpoint + "/delete/" + payload.id).then(response => {
           resolve(response.data);
         }, error => {
           reject(error);

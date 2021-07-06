@@ -1,18 +1,22 @@
 <template>
   <div class="table-wrapper">
-    <h1 v-if="dataSetName">{{ dataSetName }}</h1>
+    <p v-if="dataSetName">{{ dataSetName }}</p>
     <table>
       <thead>
         <tr>
           <th v-for="(header, index) in tableHeader" :key="index">
             {{ header }}
           </th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="(dataRow, index) in tableData" :key="index">
           <td v-for="(data, index) in dataRow" :key="index">
             {{ data }}{{ index == "value" ? "°C" : "" }}
+          </td>
+          <td @click="deleteTemperature(index, dataRow.id)">
+            <i class="mdi mdi-delete"></i>
           </td>
         </tr>
       </tbody>
@@ -27,6 +31,16 @@ export default {
     dataSetName: { type: String, default: "" },
     tableHeader: { type: Array },
     tableData: { type: Array },
+  },
+  methods: {
+    deleteTemperature: function (index, temperatureId) {
+      let payload = {
+        endpoint: "temperature",
+        id: temperatureId,
+      };
+      this.$store.dispatch("delete", payload);
+      this.$emit("childUpdate");
+    },
   },
 };
 </script>
@@ -48,14 +62,6 @@ export default {
         top: 0px;
         padding: 10px;
         background-color: darken($backgroundcolor, 10%);
-
-        &:first-of-type {
-          border-top-left-radius: 10px;
-        }
-
-        &:last-of-type {
-          border-top-right-radius: 10px;
-        }
       }
     }
 

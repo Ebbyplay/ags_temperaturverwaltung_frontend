@@ -13,7 +13,11 @@
     </button>
   </div>
   <div id="temperatures-container">
-    <TableCom :tableHeader="tableHeader" :tableData="temperatures" />
+    <TableCom
+      :tableHeader="tableHeader"
+      :tableData="temperatures"
+      @childUpdate="getTemperatures()"
+    />
   </div>
 </template>
 
@@ -115,7 +119,5 @@ export default {
   overflow-x: hidden;
   height: 80%;
   padding-right: 20px;
-  display: flex;
-  flex-direction: column;
 }
 </style>
